@@ -17,6 +17,13 @@ body {
   .display {
     display: flex;
     border: 2px solid;
+    background-color: antiquewhite;
+    align-self: flex-start;
+    min-width: 100px;
+    min-height: 30px;
+    padding: 4px;
+    align-items: center;
+
   }
 
   .buttons {
