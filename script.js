@@ -36,14 +36,18 @@ function display(symbol){
 function clear(){
   const display = document.getElementById("display");
   display.textContent = '';
+
+str = '';
+operator = '';
+num1 = 0;
+result = 0;
+click_count = 0;
 };
 
 // Global Variables
-
 let str = '';
 let operator = '';
 let num1 = 0;
-let num2 = 0;
 let result = 0;
 let click_count = 0;
 //
@@ -66,23 +70,41 @@ clear_btn.addEventListener('click', () => {
 const operators = document.querySelectorAll('.operator');
 operators.forEach((item) => {
   item.addEventListener('click', () => {
-    click_count++;
     operator = item.textContent;
 
-    if(click_count % 2 === 0)
-      num1 = parseInt(str);
+    if(click_count === 1)
+     result = parseFloat(str);
     else 
-     num2 = parseInt(str);
+     num1 = parseFloat(str);
 
     str = '';
-    if(click_count > 1){
-      result = operate(num1,operator,num2);
+    if(click_count === 1){
+      result = operate(num1,previous_operator,result);
+    }else if(click_count > 1){
+      result = operate(result,previous_operator,num1);
     }
-      
+  previous_operator = operator;
+    click_count++;
   });
 });
 
 const evaluate = document.querySelector('#evaluate');
 evaluate.addEventListener('click', () => {
+  
+  
+
+  if(click_count === 1){
+    result = parseFloat(str);
+    result = operate(num1,operator,result);
+  }else if(click_count > 1){
+    num1 = parseFloat(str);
+    result = operate(result,operator,num1);
+  }
   display(result);
+
+str = '';
+operator = '';
+num1 = 0;
+result = 0;
+click_count = 0;
 });
